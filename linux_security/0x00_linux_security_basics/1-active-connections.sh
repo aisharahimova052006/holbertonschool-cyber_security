@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo ss -tnaep
+ss -tnaep | head -n 20
