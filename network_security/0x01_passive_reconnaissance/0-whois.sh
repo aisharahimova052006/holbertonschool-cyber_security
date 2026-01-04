@@ -1,2 +1,2 @@
 #!/bin/bash
-whois $1 | awk -F": " '/Registrant|Admin|Tech/{if($1 ~ /Street/) print $1","$2" "; else if($1 ~ /Ext/) print $1":,"; else print $1","$2}' > $1.csv
+whois $1 | awk '{idx=index($0,":"); if(idx==0) next; key=substr($0,1,idx-1); val=substr($0,idx+1); gsub(/^[ \t]+|[ \t]+$/,"",key); gsub(/^[ \t]+|[ \t]+$/,"",val); if(key ~ /^(Registrant|Admin|Tech)/ && key ~ /(Name|Organization|Street|City|State\/Province|Postal Code|Country|Phone$|Phone Ext$|Fax$|Fax Ext$|Email$)/){ if(key ~ /Ext$/){ if(val=="") printf "%s:,\n",key; else printf "%s:, %s\n",key,val } else if(key ~ /Street/){ if(val=="") printf "%s,\n",key; else printf "%s, %s \n",key,val } else { if(val=="") printf "%s,\n",key; else printf "%s, %s\n",key,val } } }' > $1.csv
