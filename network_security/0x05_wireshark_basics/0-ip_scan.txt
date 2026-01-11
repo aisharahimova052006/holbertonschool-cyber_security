@@ -1,1 +1,1 @@
-7	5.852673481	192.168.75.132	8.8.8.8	ICMP	42	Echo (ping) request  id=0xe689, seq=0/0, ttl=53 (reply in 14)
+1437	387.373251273	8.8.8.8	192.168.75.132	ICMP	60	Echo (ping) reply    id=0x264c, seq=0/0, ttl=128 (request in 1367)
