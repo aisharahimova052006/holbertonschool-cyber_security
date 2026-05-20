@@ -15,6 +15,7 @@ def save_tasks(tasks)
   end
 end
 
+tasks = load_tasks
 options = {}
 
 OptionParser.new do |opts|
@@ -38,17 +39,14 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-tasks = load_tasks
-
 if options[:add]
   tasks << options[:add]
   save_tasks(tasks)
   puts "Task '#{options[:add]}' added."
 
 elsif options[:list]
-  tasks.each_with_index do |task, i|
-    puts "#{i + 1}. #{task}"
-  end
+  puts "Tasks:"
+  tasks.each { |task| puts task }
 
 elsif options[:remove]
   index = options[:remove] - 1
