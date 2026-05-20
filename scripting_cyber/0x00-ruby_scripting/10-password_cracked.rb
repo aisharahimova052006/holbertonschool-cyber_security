@@ -7,7 +7,7 @@ if ARGV.length != 2
   exit 1
 end
 
-target_hash = ARGV[0]
+hashed_password = ARGV[0]
 dictionary_file = ARGV[1]
 
 found = false
@@ -16,7 +16,7 @@ File.foreach(dictionary_file) do |word|
   word = word.strip
   hash = Digest::SHA256.hexdigest(word)
 
-  if hash == target_hash
+  if hash == hashed_password
     puts "Password found: #{word}"
     found = true
     break
