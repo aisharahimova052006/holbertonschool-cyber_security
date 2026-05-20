@@ -1,18 +1,22 @@
 #!/usr/bin/env ruby
 require 'json'
-require_relative '3-read_file'
 
-def write_file(path, data)
-  File.write(path, JSON.pretty_generate(data))
-end
+def merge_json_files(file1_path, file2_path)
+  return unless File.exist?(file1_path) && File.exist?(file2_path)
 
-def merge_json_files(file1, file2)
-  data1 = read_file(file1)
-  data2 = read_file(file2)
+  begin
+    file1_data = JSON.parse(File.read(file1_path))
+    file2_data = JSON.parse(File.read(file2_path))
+    file1_data = [file1_data] unless file1_data.is_kind_of?(Array)
+    file2_data = [file2_data] unless file2_data.is_kind_of?(Array)
+    merged_data = file2_data + file1_data
 
-  merged = data2.merge(data1)
-
-  write_file(file2, merged)
-
-  puts "Merged JSON written to #{file2}"
+    File.open(file2_path, 'w') do |f|
+      f.write(JSON.pretty_generate(merged_data))
+    end
+  rescue JSON::ParserError => e
+    puts "Error parsing JSON: #{e.message}"
+  rescue StandardError => e
+    puts "An error occurred: #{e.message}"
+  end
 end
