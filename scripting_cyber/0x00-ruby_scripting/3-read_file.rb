@@ -1,15 +1,11 @@
 #!/usr/bin/env ruby
 require 'json'
 
-def count_user_ids(path)
-  file = File.read(path)
-  data = JSON.parse(file)
-  counts = Hash.new(0)
-  data.each do |item|
-    user_id = item["userId"]
-    counts[user_id] += 1
-  end
-  counts.sort.each do |user_id, count|
-    puts "#{user_id}: #{count}"
-  end
+def read_file(file_path)
+  file = File.read(file_path)
+  JSON.parse(file)
+rescue Errno::ENOENT
+  {}
+rescue JSON::ParserError
+  {}
 end
