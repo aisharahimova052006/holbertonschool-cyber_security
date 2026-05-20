@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'json'
+
+def merge_json_files(file1_path, file2_path)
+  file1 = JSON.parse(File.read(file1_path))
+  file2 = JSON.parse(File.read(file2_path))
+  merged = file2 + file1
+  File.write(file2_path, JSON.generate(merged))
+end
